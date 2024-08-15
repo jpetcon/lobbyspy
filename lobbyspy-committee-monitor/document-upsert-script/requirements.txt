@@ -1,0 +1,7 @@
+boto3
+datetime
+langchain==0.1.12
+pandas==2.0.3
+pinecone-client==3.1.0
+requests
+sentence-transformers==2.5.1

@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - cd individual-speaker-retrieval
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t individual-speaker-retrieval .
+      - docker tag individual-speaker-retrieval $AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/speech-graph:individual-speaker-retrieval
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/speech-graph:individual-speaker-retrieval
